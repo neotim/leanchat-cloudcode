@@ -1,26 +1,12 @@
 /**
  * Created by lzw on 14/11/20.
  */
-var AV = require('leanengine');
-var crypto = require('crypto');
+var common = require('cloud/common.js');
 
 APPID = AV.applicationId;
 MASTER_KEY = AV.masterKey;
 
-function sign(text, key) {
-  // Hmac-sha1 hex digest
-  return crypto.createHmac('sha1', key).update(text).digest('hex');
-}
-
-function getNonce(chars) {
-  var d = [];
-  for (var i = 0; i < chars; i++) {
-    d.push(parseInt(Math.random() * 10));
-  }
-  return d.join('');
-}
-
-function _convSign(selfId, convid, targetIds, action, appId, masterKey, nonce, ts) {
+function _convSign(selfId, convid, targetIds, action, appId, masterKey, nonce,ts) {
   if (targetIds == null) {
     targetIds = [];
   }
@@ -31,11 +17,11 @@ function _convSign(selfId, convid, targetIds, action, appId, masterKey, nonce, t
   if (!masterKey) {
     masterKey = MASTER_KEY;
   }
-  if (!ts) {
+  if (!ts){
     ts = parseInt(new Date().getTime() / 1000);
   }
   if (!nonce) {
-    nonce = getNonce(5);
+    nonce = common.getNonce(5);
   }
   var content;
   if (convid) {
@@ -47,7 +33,7 @@ function _convSign(selfId, convid, targetIds, action, appId, masterKey, nonce, t
   if (action) {
     content += ':' + action;
   }
-  var sig = sign(content, masterKey);
+  var sig = common.sign(content, masterKey);
   return {"nonce": nonce, "timestamp": ts, "signature": sig};
 }
 

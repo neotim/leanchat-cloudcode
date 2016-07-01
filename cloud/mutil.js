@@ -1,5 +1,6 @@
 var util = require('util');
-var mlog = require('./mlog');
+var mlog = require('cloud/mlog.js');
+var moment = require('moment');
 var crypto = require('crypto');
 
 function doErr(err) {
@@ -11,10 +12,10 @@ function renderError(res, error) {
   if (error == null) {
     _error = "Unknown error";
   }
-  if (typeof error != 'string') {
+  if (typeof error != 'string'){
     _error = util.inspect(error);
-    if (error.stack && process.env.LC_APP_ENV == 'development') {
-      _error += ' stack=' + error.stack;
+    if(error.stack && !__production){
+      _error+=' stack='+error.stack;
     }
   }
   res.render('500', {error: _error});
@@ -32,7 +33,14 @@ function rejectFn(promise) {
   }
 }
 
+function logErrorFn() {
+  return function (err) {
+    mlog.logError(err);
+  }
+}
+
 function renderForbidden(res) {
+  mlog.log('render forbidden');
   renderError(res, "Forbidden area.");
 }
 
@@ -89,6 +97,35 @@ function testFn(fn, res) {
   }, mutil.renderErrorFn(res));
 }
 
+function calDateBeforeDays(days) {
+  var now = moment().subtract(days, 'day');
+  now.hour(0);
+  now.minute(0);
+  now.second(0);
+  return now.toDate();
+}
+
+function calDateFromDateByDays(date, days) {
+  var date = new moment(date);
+  date.subtract(days, 'day');
+  return date.toDate();
+}
+
+function durationQueryFn(field, startDate, endDate) {
+  return function (q) {
+    q.greaterThan(field, startDate);
+    q.lessThan(field, endDate);
+  };
+}
+
+function updatedAtDurationQueryFn(startDate, endDate) {
+  return durationQueryFn('updatedAt', startDate, endDate);
+}
+
+function createdAtDurationQueryFn(startDate, endDate) {
+  return durationQueryFn('createdAt', startDate, endDate);
+}
+
 function encrypt(s) {
   var md5 = crypto.createHash('md5');
   md5.update(s);
@@ -97,13 +134,9 @@ function encrypt(s) {
 
 function cloudErrorFn(response) {
   return function (error) {
-    console.log('cloudError ' + error.message);
+    console.log('cloudError '+error.message);
     response.error(error.message);
   };
-}
-
-function isDevelopment() {
-  return !process.env.LC_APP_ENV || process.env.LC_APP_ENV == 'development';
 }
 
 exports.doErr = doErr;
@@ -111,9 +144,13 @@ exports.renderErrorFn = renderErrorFn;
 exports.renderError = renderError;
 exports.rejectFn = rejectFn;
 exports.renderForbidden = renderForbidden;
+exports.logErrorFn = logErrorFn;
 exports.findAll = findAll;
 exports.findOne = findOne;
 exports.testFn = testFn;
+exports.calDateBeforeDays = calDateBeforeDays;
+exports.updatedAtDurationQueryFn = updatedAtDurationQueryFn;
+exports.calDateFromDateByDays = calDateFromDateByDays;
+exports.createdAtDurationQueryFn = createdAtDurationQueryFn;
 exports.encrypt = encrypt;
 exports.cloudErrorFn = cloudErrorFn;
-exports.isDevelopment = isDevelopment;
