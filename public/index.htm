@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Peer to Peer Learning</title>
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="icon" id="favicon" href="tml.ico" type="image/x-icon" />
+  <div>
+    <div id="login-item" class="aa col col-50 col-offset-25" style="display:none">
+      <form action="tml/TML.tml" method="post" onsubmit="return lg();">
+        <h2>Web Version Entrance Password</h2>
+        <div class="list list-inset">
+          <label class="item item-input">
+            <i class="icon ion-locked placeholder-icon"></i>
+            <input id="input-password" placeholder="Password" name="input-password" type="password" />
+          </label>
+        </div>
+        <input type=submit value="Enter" class="button icon-right ion-chevron-right button-calm" />
+        <input type=button value="Return" onclick="showlg()" class="button icon-right ion-chevron-right button-calm" />
+      </form>
+    </div>
+  </div>
+  <div id="down-item" class="middle aa">
+    <h1>Peer to Peer Learning</h1>
+    <h2>Web &amp; Mobile &amp; Desktop Apps</h2>
+    <p>Click the links below to get the latest version of our client apps</p>
+    <a class="cf_ web" href="#" onclick="showlg();"><img src="img/html.svg">
+      <div><span>Use app with </span> <strong> Web Browser</strong></div>
+    </a>
+    <a class="cf_" target="_blank" href="http://tml.cn/tml.zip"><img src="img/windows.svg">
+      <div><span>Download for </span> <strong> Windows</strong></div>
+    </a>
+    <a class="cf_ apple" target="_blank" href="https://www.pgyer.com/nSoU"><img src="img/apple.svg">
+      <div><span>Get it for </span> <strong> iPhone/iPad</strong></div>
+    </a>
+    <a class="cf_ google" href="#" onclick="alert('Coming Soon')"><img src="img/android.svg">
+      <div><span>Get it for </span> <strong> Android</strong></div>
+    </a>
+    <a class="cf_ apple" href="#" onclick="alert('Coming Soon')"><img src="img/mac.svg">
+      <div><span>Get it for </span> <strong> Mac OS X</strong></div>
+    </a>
+    <a class="cf_" href="#" onclick="alert('Coming Soon')"><img src="img/linux.svg">
+      <div><span>Download for </span> <strong> Linux</strong></div>
+    </a>
+  </div>
+  <style>
+  body {
+      padding-top: 20px;
+      text-align: center;
+      font-size: 13px;
+      background-color: #fff;
+    }
+  cf_ {
+      clear: both;
+      background-color: #2468ff;
+      !important;
+    }
+.cf_ google {
+      background-color: #fff;
+      !important;
+    }
+.aa {
+      -webkit-transition: all 1s ease;
+      -moz-transition: all 1s ease;
+      -ms-transition: all 1s ease;
+      -o-transition: all 1s ease;
+      border-radius: 20px;
+      -webkit-transition: all 1s ease-out;
+      -moz-transition: all 1s ease-out;
+      -o-transition: all 1s ease-out;
+      transition: all 1s ease-out;
+    }
+body a {
+      text-decoration: none;
+      -webkit-transition: all 1s ease;
+      -moz-transition: all 1s ease;
+      -ms-transition: all 1s ease;
+      -o-transition: all 1s ease;
+      display: inline-block;
+      color: #FFF;
+      line-height: 15px;
+      text-decoration: none;
+      text-align: left;
+      background-color: #2468ac;
+      padding: 6px 13px 7px 10px;
+      border-radius: 20px;
+      margin: 7px;
+      -webkit-transition: all 1s ease-out;
+      -moz-transition: all 1s ease-out;
+      -o-transition: all 1s ease-out;
+      transition: all 1s ease-out;
+    }
+a:hover {
+      color: #FFF;
+      border-radius: 25px;
+      background-color: #4499bb;
+    }
+  </style><script>function showlg(){var a=document.getElementById("login-item"),b=document.getElementById("down-item");"none"==a.style.display?(a.style.display="",b.style.display="none"):(a.style.display="none",b.style.display="")}</script>
+  <script src="tml/tml.js"></script>
+  <link rel=stylesheet href=tml/img/tml.css>
